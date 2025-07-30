@@ -60,7 +60,7 @@ jobs:
           else
             echo "Unable to determine package manager"
             exit 1
-          fi # <-- ¡Este 'fi' faltaba!
+          fi
           # --- FIN DE CAMBIOS ---
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -68,6 +68,7 @@ jobs:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
+          install-pnpm: true # <-- ¡Nueva línea para instalar pnpm!
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
