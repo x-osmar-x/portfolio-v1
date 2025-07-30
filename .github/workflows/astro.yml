@@ -38,7 +38,6 @@ jobs:
       - name: Detect package manager
         id: detect-package-manager
         run: |
-          # --- CAMBIOS AQUÍ PARA DETECTAR PNPM ---
           if [ -f "${{ github.workspace }}/pnpm-lock.yaml" ]; then
             echo "manager=pnpm" >> $GITHUB_OUTPUT
             echo "command=install" >> $GITHUB_OUTPUT
@@ -61,14 +60,15 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-          # --- FIN DE CAMBIOS ---
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
           cache-dependency-path: ${{ env.BUILD_PATH }}/${{ steps.detect-package-manager.outputs.lockfile }}
-          install-pnpm: true # <-- ¡Nueva línea para instalar pnpm!
+      - name: Install pnpm (if needed)
+        if: steps.detect-package-manager.outputs.manager == 'pnpm'
+        run: npm install -g pnpm
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
