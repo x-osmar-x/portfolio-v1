@@ -1,0 +1,133 @@
+---
+/* import HeroLogo from "../components/HeroLogo.astro";
+import appConfig from "../constants/app.config";
+import ModalRequestAcces from "./ModalRequestAcces"; */
+---
+
+<nav
+  class="sticky top-0 z-10 bg-red-500 min-h-[8dvh] 2xl:min-h-[10dvh] flex flex-col justify-center items-center"
+>
+  <div
+    class="container mx-auto flex justify-between items-center px-4 2xl:px-0 xl:px-0 2xl:w-[90%] xl:w-[90%] w-full"
+  >
+    <!-- Logo -->
+    <a href="/" class="text-lg font-bold w-auto">
+<!--       <HeroLogo
+        class="h-auto w-[180px] 2xl:w-[230px] xl:w-[230px] overflow-visible"
+        id="logo"
+        noEffect
+      /> -->
+    </a>
+
+    <!-- Desktop Navigation -->
+    <div class="2xl:flex xl:flex hidden flex-row gap-4 items-center">
+      <div class="flex gap-2 ml-4">
+        <a
+          href="https://tacticalxtechnical.substack.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="border-2 border-secondaryBorder w-[180px] px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        >
+          tactical x technical
+        </a>
+<!--         <a
+          href={appConfig.webPageLogin}
+          class="border-2 border-secondaryBorder w-[160px] px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        >
+          Log In
+        </a> -->
+<!--         <ModalRequestAcces
+          client:only="react"
+          titleButton="LaunchMate"
+          className="border-2 bg-primaryBtn w-[160px] px-4 py-2 text-secondaryText text-sm text-center font-dm-sans font-bold rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        /> -->
+      </div>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button
+      class="xl:hidden text-primaryText font-semibold rounded-full p-2"
+      id="menu-button"
+      aria-label="Toggle menu"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div
+  id="mobile-menu"
+  class="hidden xl:hidden fixed top-[8dvh] h-full left-0 right-0 bg-white z-40 overflow-y-auto transition-all duration-300"
+>
+  <div class="px-6 pb-6 gap-6 py-12 flex flex-col items-center">
+    <a
+      href="https://tacticalxtechnical.substack.com/"
+      class="block w-64 px-4 py-2 text-center text-quaternaryText font-dm-sans font-bold rounded-full border-2 border-secondaryBorder bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      tactical x technical
+    </a>
+<!--     <a
+      href={appConfig.webPageLogin}
+      class="block w-64 px-4 py-2 text-center text-quaternaryText font-dm-sans font-bold rounded-full border-2 border-secondaryBorder bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300"
+    >
+      Log In
+    </a>
+    <ModalRequestAcces
+      client:only="react"
+      titleButton="LaunchMate"
+      className="w-64 px-4 py-2 text-secondaryText text-center font-dm-sans font-bold rounded-full bg-primaryBtn shadow-md hover:shadow-lg transition-all duration-300"
+    /> -->
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const menuButton = document.getElementById("menu-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+        document.body.style.overflow = mobileMenu.classList.contains("hidden")
+          ? "auto"
+          : "hidden";
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener("click", (e) => {
+        if (
+          !mobileMenu.classList.contains("hidden") &&
+          !menuButton.contains(e.target) &&
+          !mobileMenu.contains(e.target)
+        ) {
+          mobileMenu.classList.add("hidden");
+          document.body.style.overflow = "auto";
+        }
+      });
+    }
+
+    // Close menu when clicking on links
+    const menuLinks = document.querySelectorAll("#mobile-menu a");
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        document.body.style.overflow = "auto";
+      });
+    });
+  });
+</script>
