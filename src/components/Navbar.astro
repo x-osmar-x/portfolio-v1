@@ -5,42 +5,37 @@ import ModalRequestAcces from "./ModalRequestAcces"; */
 ---
 
 <nav
-  class="sticky top-0 z-10 bg-red-500 min-h-[8dvh] 2xl:min-h-[10dvh] flex flex-col justify-center items-center"
+  class="sticky top-0 z-10 min-h-[8dvh] 2xl:min-h-[10dvh] flex flex-col justify-center items-center"
 >
   <div
     class="container mx-auto flex justify-between items-center px-4 2xl:px-0 xl:px-0 2xl:w-[90%] xl:w-[90%] w-full"
   >
     <!-- Logo -->
-    <a href="/" class="text-lg font-bold w-auto">
-<!--       <HeroLogo
-        class="h-auto w-[180px] 2xl:w-[230px] xl:w-[230px] overflow-visible"
-        id="logo"
-        noEffect
-      /> -->
-    </a>
+    <a href="/" class="text-lg font-bold w-auto"> Osmar </a>
 
     <!-- Desktop Navigation -->
     <div class="2xl:flex xl:flex hidden flex-row gap-4 items-center">
       <div class="flex gap-2 ml-4">
         <a
-          href="https://tacticalxtechnical.substack.com/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="border-2 border-secondaryBorder w-[180px] px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
         >
-          tactical x technical
+          Home
         </a>
-<!--         <a
-          href={appConfig.webPageLogin}
-          class="border-2 border-secondaryBorder w-[160px] px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        <button
+          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
         >
-          Log In
-        </a> -->
-<!--         <ModalRequestAcces
-          client:only="react"
-          titleButton="LaunchMate"
-          className="border-2 bg-primaryBtn w-[160px] px-4 py-2 text-secondaryText text-sm text-center font-dm-sans font-bold rounded-full shadow-md hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
-        /> -->
+          Projects
+        </button>
+        <button
+          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        >
+          Skills
+        </button>
+        <button
+          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+        >
+          Contact me
+        </button>
       </div>
     </div>
 
@@ -81,7 +76,7 @@ import ModalRequestAcces from "./ModalRequestAcces"; */
     >
       tactical x technical
     </a>
-<!--     <a
+    <!--     <a
       href={appConfig.webPageLogin}
       class="block w-64 px-4 py-2 text-center text-quaternaryText font-dm-sans font-bold rounded-full border-2 border-secondaryBorder bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300"
     >

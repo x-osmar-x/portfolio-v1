@@ -1,25 +1,24 @@
 ---
-import Navbar from '../components/Navbar.astro';
-import '../styles/global.css';
+import Navbar from "../components/Navbar.astro";
+import "../styles/global.css";
 ---
 
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<main class="flex flex-col min-h-svh bg-red-500">
-			<Navbar />
-	  
-			<section class="flex-1 overflow-y-auto no-scrollbar">
-			  <slot />
-			  <!-- <Footer /> -->
-			</section>
-		  </main>
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Astro Basics</title>
+  </head>
+  <body>
+    <main class="flex flex-col min-h-svh bg-[#1E1E1E]">
+      <Navbar />
+      <section class="flex-1 overflow-y-auto no-scrollbar max-w-7xl mx-auto">
+        <slot />
+        <!-- <Footer /> -->
+      </section>
+    </main>
+  </body>
 </html>

@@ -1,5 +1,7 @@
 ---
 /* import Welcome from '../components/Welcome.astro'; */
+import Hero from '../components/Hero.astro';
+import Experience from '../components/Experience.astro';
 import Layout from '../layouts/Layout.astro';
 
 // Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
@@ -8,10 +10,12 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout>
 	<!-- <Welcome /> -->
-	<div class="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center bg-red-500">
+<!-- 	<div class="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center bg-red-500">
 		<div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto">
 			<h1 class="text-3xl font-bold text-gray-800 mb-4">¡Tailwind CSS está funcionando!</h1>
 			<p class="text-gray-600">Tu configuración de Tailwind CSS con Astro y Vite está lista.</p>
 		</div>
-	</div>
+	</div> -->
+	<Hero />
+	<Experience />
 </Layout>
