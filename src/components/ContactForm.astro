@@ -1,0 +1,145 @@
+---
+---
+
+<div id="contact-form" class="w-full max-w-md mx-auto">
+  <form
+    id="email-form"
+    class="space-y-4"
+    method="POST"
+    action="/api/send-email"
+    onsubmit="handleFormSubmit(event)"
+  >
+    <div>
+      <label
+        for="name"
+        class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+      >
+        Nombre
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        required
+        class="w-full rounded-lg border border-zinc-300/90 bg-white px-4 py-2 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm transition-colors focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/[0.1] dark:bg-zinc-950/50 dark:text-zinc-100 dark:placeholder-zinc-400 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+        placeholder="Tu nombre"
+      />
+    </div>
+
+    <div>
+      <label
+        for="email"
+        class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+      >
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        required
+        class="w-full rounded-lg border border-zinc-300/90 bg-white px-4 py-2 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm transition-colors focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/[0.1] dark:bg-zinc-950/50 dark:text-zinc-100 dark:placeholder-zinc-400 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+        placeholder="tu@email.com"
+      />
+    </div>
+
+    <div>
+      <label
+        for="subject"
+        class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+      >
+        Asunto
+      </label>
+      <input
+        type="text"
+        id="subject"
+        name="subject"
+        required
+        class="w-full rounded-lg border border-zinc-300/90 bg-white px-4 py-2 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm transition-colors focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/[0.1] dark:bg-zinc-950/50 dark:text-zinc-100 dark:placeholder-zinc-400 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20"
+        placeholder="Asunto del mensaje"
+      />
+    </div>
+
+    <div>
+      <label
+        for="message"
+        class="block text-sm font-medium text-zinc-700 dark:text-zinc-300 mb-1"
+      >
+        Mensaje
+      </label>
+      <textarea
+        id="message"
+        name="message"
+        rows="4"
+        required
+        class="w-full rounded-lg border border-zinc-300/90 bg-white px-4 py-2 text-sm text-zinc-900 placeholder-zinc-500 shadow-sm transition-colors focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 dark:border-white/[0.1] dark:bg-zinc-950/50 dark:text-zinc-100 dark:placeholder-zinc-400 dark:focus:border-emerald-400 dark:focus:ring-emerald-400/20 resize-none"
+        placeholder="Tu mensaje..."
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="w-full rounded-lg bg-emerald-600 px-6 py-3 text-sm font-medium text-white shadow-sm transition-colors hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:ring-offset-2 dark:bg-emerald-500/90 dark:text-zinc-950 dark:hover:bg-emerald-400 dark:focus:ring-emerald-400/20 dark:focus:ring-offset-zinc-950 disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      <span id="submit-text">Enviar mensaje</span>
+      <span id="loading-text" class="hidden">Enviando...</span>
+    </button>
+  </form>
+
+  <div id="form-message" class="mt-4 hidden">
+    <div class="rounded-lg p-4 text-sm"></div>
+  </div>
+</div>
+
+<script>
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+    
+    const form = event.target;
+    const submitText = document.getElementById('submit-text');
+    const loadingText = document.getElementById('loading-text');
+    const formMessage = document.getElementById('form-message');
+    const messageDiv = formMessage.querySelector('div');
+    
+    // Show loading state
+    submitText.classList.add('hidden');
+    loadingText.classList.remove('hidden');
+    form.querySelector('button').disabled = true;
+    formMessage.classList.add('hidden');
+    
+    try {
+      const formData = new FormData(form);
+      
+      const response = await fetch('/api/send-email', {
+        method: 'POST',
+        body: formData,
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        // Success message
+        messageDiv.className = 'rounded-lg p-4 text-sm bg-emerald-50 text-emerald-800 border border-emerald-200 dark:bg-emerald-900/20 dark:text-emerald-200 dark:border-emerald-800';
+        messageDiv.textContent = result.success || '✅ Email enviado correctamente';
+        form.reset();
+      } else {
+        // Error message
+        messageDiv.className = 'rounded-lg p-4 text-sm bg-red-50 text-red-800 border border-red-200 dark:bg-red-900/20 dark:text-red-200 dark:border-red-800';
+        messageDiv.textContent = result.error || '❌ Error al enviar el mensaje';
+      }
+      
+      formMessage.classList.remove('hidden');
+      
+    } catch (error) {
+      // Show error message
+      messageDiv.className = 'rounded-lg p-4 text-sm bg-red-50 text-red-800 border border-red-200 dark:bg-red-900/20 dark:text-red-200 dark:border-red-800';
+      messageDiv.textContent = 'Error de conexión. Por favor intenta nuevamente.';
+      formMessage.classList.remove('hidden');
+    } finally {
+      // Reset loading state
+      submitText.classList.remove('hidden');
+      loadingText.classList.add('hidden');
+      form.querySelector('button').disabled = false;
+    }
+  }
+</script>

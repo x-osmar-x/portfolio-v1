@@ -1,0 +1,16 @@
+---
+import Hero from "../../components/Hero.astro";
+import Experience from "../../components/Experience.astro";
+import Contact from "../../components/Contact.astro";
+import Layout from "../../layouts/Layout.astro";
+import { getStrings } from "../../i18n/strings";
+
+const lang = "en";
+const t = getStrings(lang);
+---
+
+<Layout lang={lang}>
+  <Hero lang={lang} t={t.hero} />
+  <Experience t={t.experience} jobs={t.jobs} />
+  <Contact t={t.contact} />
+</Layout>

@@ -1,127 +1,262 @@
 ---
-/* import HeroLogo from "../components/HeroLogo.astro";
-import appConfig from "../constants/app.config";
-import ModalRequestAcces from "./ModalRequestAcces"; */
+import { getStrings, otherLangPath, type Lang } from "../i18n/strings";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getStrings(lang);
+const n = t.nav;
+const basePath = lang === "en" ? "/en" : "";
+const hash = (id: string) => `${basePath}/#${id}`;
 ---
 
 <nav
-  class="sticky top-0 z-10 min-h-[8dvh] 2xl:min-h-[10dvh] flex flex-col justify-center items-center"
+  class="sticky top-0 z-50 border-b border-zinc-200/80 bg-white/85 backdrop-blur-md dark:border-white/[0.06] dark:bg-zinc-950/85"
 >
   <div
-    class="container mx-auto flex justify-between items-center px-4 2xl:px-0 xl:px-0 2xl:w-[90%] xl:w-[90%] w-full"
+    class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8"
   >
-    <!-- Logo -->
-    <a href="/" class="text-lg font-bold w-auto"> Osmar </a>
+    <a
+      href={`${basePath}/`}
+      class="shrink-0 text-[15px] font-semibold tracking-tight text-zinc-900 transition-colors hover:text-zinc-700 dark:text-zinc-100 dark:hover:text-white"
+    >
+      Osmar Barrientos
+    </a>
 
-    <!-- Desktop Navigation -->
-    <div class="2xl:flex xl:flex hidden flex-row gap-4 items-center">
-      <div class="flex gap-2 ml-4">
+    <div class="hidden items-center gap-1 md:flex">
+      <a
+        href={hash("top")}
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.04] dark:hover:text-zinc-100"
+      >
+        {n.home}
+      </a>
+      <a
+        href={hash("experience")}
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.04] dark:hover:text-zinc-100"
+      >
+        {n.experience}
+      </a>
+      <a
+        href={hash("contact")}
+        class="rounded-md px-3 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-200/80 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-white/[0.04] dark:hover:text-zinc-100"
+      >
+        {n.contact}
+      </a>
+
+      <div
+        class="mx-1 hidden h-5 w-px bg-zinc-300 dark:bg-zinc-700 sm:block"
+        aria-hidden="true"
+      ></div>
+
+      <div class="flex items-center gap-1 pl-1">
         <a
-          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+          href={otherLangPath(lang)}
+          class="rounded-md px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-500 transition-colors hover:text-zinc-800 dark:text-zinc-500 dark:hover:text-zinc-300"
+          hreflang={lang === "es" ? "en" : "es"}
         >
-          Home
+          {lang === "es" ? "EN" : "ES"}
         </a>
         <button
-          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
+          type="button"
+          id="theme-toggle"
+          class="rounded-md p-2 text-zinc-600 transition-colors hover:bg-zinc-200/80 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-white/[0.06] dark:hover:text-white"
+          aria-label={n.themeDark}
+          title={n.themeDark}
+          data-label-light={n.themeLight}
+          data-label-dark={n.themeDark}
         >
-          Projects
-        </button>
-        <button
-          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
-        >
-          Skills
-        </button>
-        <button
-          class="px-4 py-2 leading-none text-quaternaryText text-sm text-center font-dm-sans font-bold rounded-full hover:shadow-lg transition-all duration-300 flex items-center justify-center space-x-2"
-        >
-          Contact me
+          <span class="block dark:hidden" aria-hidden="true">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+              ></path>
+            </svg>
+          </span>
+          <span class="hidden dark:block" aria-hidden="true">
+            <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+              ></path>
+            </svg>
+          </span>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Menu Button -->
-    <button
-      class="xl:hidden text-primaryText font-semibold rounded-full p-2"
-      id="menu-button"
-      aria-label="Toggle menu"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
+    <div class="flex items-center gap-2 md:hidden">
+      <a
+        href={otherLangPath(lang)}
+        class="rounded-md px-2 py-1.5 text-xs font-semibold uppercase tracking-wide text-zinc-600 dark:text-zinc-400"
+        hreflang={lang === "es" ? "en" : "es"}
       >
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M4 6h16M4 12h16M4 18h16"></path>
-      </svg>
-    </button>
+        {lang === "es" ? "EN" : "ES"}
+      </a>
+      <button
+        type="button"
+        id="theme-toggle-mobile"
+        class="rounded-md p-2 text-zinc-600 dark:text-zinc-300"
+        aria-label={n.themeDark}
+        data-label-light={n.themeLight}
+        data-label-dark={n.themeDark}
+      >
+        <span class="block dark:hidden" aria-hidden="true">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"
+            ></path>
+          </svg>
+        </span>
+        <span class="hidden dark:block" aria-hidden="true">
+          <svg class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+            ></path>
+          </svg>
+        </span>
+      </button>
+      <button
+        class="rounded-md p-2 text-zinc-600 transition-colors hover:bg-zinc-200/80 dark:text-zinc-300 dark:hover:bg-white/[0.06]"
+        id="menu-button"
+        type="button"
+        aria-label={n.openMenu}
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        data-open-label={n.openMenu}
+        data-close-label={n.closeMenu}
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-6 w-6"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          aria-hidden="true"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
   </div>
 </nav>
 
-<!-- Mobile Menu -->
 <div
   id="mobile-menu"
-  class="hidden xl:hidden fixed top-[8dvh] h-full left-0 right-0 bg-white z-40 overflow-y-auto transition-all duration-300"
+  class="fixed inset-x-0 top-14 z-40 hidden border-b border-zinc-200/90 bg-white/98 backdrop-blur-md dark:border-white/[0.06] dark:bg-zinc-950/98 sm:top-16 md:hidden"
+  role="dialog"
+  aria-modal="true"
+  aria-label={n.navLabel}
 >
-  <div class="px-6 pb-6 gap-6 py-12 flex flex-col items-center">
+  <div class="flex flex-col gap-1 px-4 py-4">
+    <a
+      href={hash("top")}
+      class="rounded-lg px-4 py-3 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+    >
+      {n.home}
+    </a>
+    <a
+      href={hash("experience")}
+      class="rounded-lg px-4 py-3 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+    >
+      {n.experience}
+    </a>
+    <a
+      href={hash("contact")}
+      class="rounded-lg px-4 py-3 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100 dark:text-zinc-300 dark:hover:bg-white/[0.04] dark:hover:text-white"
+    >
+      {n.contact}
+    </a>
     <a
       href="https://tacticalxtechnical.substack.com/"
-      class="block w-64 px-4 py-2 text-center text-quaternaryText font-dm-sans font-bold rounded-full border-2 border-secondaryBorder bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300"
+      class="mt-2 rounded-lg border border-zinc-200 px-4 py-3 text-center text-sm font-medium text-zinc-600 transition-colors hover:border-zinc-300 hover:text-zinc-900 dark:border-white/10 dark:text-zinc-400 dark:hover:border-white/15 dark:hover:text-zinc-200"
       target="_blank"
       rel="noopener noreferrer"
     >
-      tactical x technical
+      {n.blog}
     </a>
-    <!--     <a
-      href={appConfig.webPageLogin}
-      class="block w-64 px-4 py-2 text-center text-quaternaryText font-dm-sans font-bold rounded-full border-2 border-secondaryBorder bg-gradient-to-r from-pgbFrom to-pgbTo shadow-md hover:shadow-lg transition-all duration-300"
-    >
-      Log In
-    </a>
-    <ModalRequestAcces
-      client:only="react"
-      titleButton="LaunchMate"
-      className="w-64 px-4 py-2 text-secondaryText text-center font-dm-sans font-bold rounded-full bg-primaryBtn shadow-md hover:shadow-lg transition-all duration-300"
-    /> -->
   </div>
 </div>
 
 <script is:inline>
-  document.addEventListener("DOMContentLoaded", () => {
-    const menuButton = document.getElementById("menu-button");
-    const mobileMenu = document.getElementById("mobile-menu");
+  function bindThemeToggle(btn) {
+    if (!btn) return;
+    var light = btn.getAttribute("data-label-light") || "Light";
+    var dark = btn.getAttribute("data-label-dark") || "Dark";
+    function syncAria() {
+      var isDark = document.documentElement.classList.contains("dark");
+      btn.setAttribute("aria-label", isDark ? light : dark);
+      btn.setAttribute("title", isDark ? light : dark);
+    }
+    syncAria();
+    btn.addEventListener("click", function () {
+      var root = document.documentElement;
+      var next = !root.classList.contains("dark");
+      root.classList.toggle("dark", next);
+      try {
+        localStorage.setItem("theme", next ? "dark" : "light");
+      } catch (e) {}
+      syncAria();
+    });
+    new MutationObserver(syncAria).observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
+  bindThemeToggle(document.getElementById("theme-toggle"));
+  bindThemeToggle(document.getElementById("theme-toggle-mobile"));
 
-    if (menuButton && mobileMenu) {
-      menuButton.addEventListener("click", () => {
-        mobileMenu.classList.toggle("hidden");
-        document.body.style.overflow = mobileMenu.classList.contains("hidden")
-          ? "auto"
-          : "hidden";
-      });
+  document.addEventListener("DOMContentLoaded", function () {
+    var menuButton = document.getElementById("menu-button");
+    var mobileMenu = document.getElementById("mobile-menu");
+    if (!menuButton || !mobileMenu) return;
 
-      // Close menu when clicking outside
-      document.addEventListener("click", (e) => {
-        if (
-          !mobileMenu.classList.contains("hidden") &&
-          !menuButton.contains(e.target) &&
-          !mobileMenu.contains(e.target)
-        ) {
-          mobileMenu.classList.add("hidden");
-          document.body.style.overflow = "auto";
-        }
-      });
+    var openLabel =
+      menuButton.getAttribute("data-open-label") || "Open menu";
+    var closeLabel =
+      menuButton.getAttribute("data-close-label") || "Close menu";
+
+    function setOpen(open) {
+      mobileMenu.classList.toggle("hidden", !open);
+      document.body.style.overflow = open ? "hidden" : "auto";
+      menuButton.setAttribute("aria-expanded", open ? "true" : "false");
+      menuButton.setAttribute("aria-label", open ? closeLabel : openLabel);
     }
 
-    // Close menu when clicking on links
-    const menuLinks = document.querySelectorAll("#mobile-menu a");
-    menuLinks.forEach((link) => {
-      link.addEventListener("click", () => {
-        mobileMenu.classList.add("hidden");
-        document.body.style.overflow = "auto";
+    menuButton.addEventListener("click", function (e) {
+      e.stopPropagation();
+      setOpen(mobileMenu.classList.contains("hidden"));
+    });
+
+    document.addEventListener("click", function (e) {
+      if (
+        !mobileMenu.classList.contains("hidden") &&
+        !menuButton.contains(e.target) &&
+        !mobileMenu.contains(e.target)
+      ) {
+        setOpen(false);
+      }
+    });
+
+    mobileMenu.querySelectorAll("a").forEach(function (link) {
+      link.addEventListener("click", function () {
+        setOpen(false);
       });
     });
   });

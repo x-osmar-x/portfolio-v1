@@ -1,23 +1,53 @@
 ---
 import Navbar from "../components/Navbar.astro";
+import { getStrings, type Lang } from "../i18n/strings";
 import "../styles/global.css";
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const t = getStrings(lang);
+const htmlLang = lang === "en" ? "en" : "es";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={htmlLang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={t.meta.description} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Astro Basics</title>
+    <title>{t.meta.title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      try {
+        var k = "theme";
+        var s = localStorage.getItem(k);
+        var prefersDark = window.matchMedia(
+          "(prefers-color-scheme: dark)"
+        ).matches;
+        var dark = s === "dark" || (s !== "light" && prefersDark);
+        document.documentElement.classList.toggle("dark", dark);
+      } catch (e) {}
+    </script>
   </head>
-  <body>
-    <main class="flex flex-col min-h-svh bg-[#1E1E1E]">
-      <Navbar />
-      <section class="flex-1 overflow-y-auto no-scrollbar max-w-7xl mx-auto">
+  <body
+    class="min-h-svh bg-zinc-100 font-sans text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100"
+  >
+    <main class="flex min-h-svh flex-col">
+      <Navbar lang={lang} />
+      <section
+        class="no-scrollbar mx-auto flex w-full max-w-6xl flex-1 flex-col overflow-y-auto px-4 pb-12 pt-2 sm:px-6 lg:px-8"
+      >
         <slot />
-        <!-- <Footer /> -->
       </section>
     </main>
   </body>

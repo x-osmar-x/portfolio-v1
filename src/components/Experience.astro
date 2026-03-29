@@ -1,18 +1,147 @@
-<section class="min-h-screen text-white bg-gradient-to-r from-[#e62c2c] via-[#ffb347] to-[#05df72] py-20 w-full flex flex-col items-center justify-center rounded-3xl shadow-2xl mt-16">
-    <h2 class="text-3xl font-bold mb-6 drop-shadow-lg">Experiencia Profesional</h2>
-    <p class="text-lg mb-8 max-w-xl text-center">Aquí puedes encontrar detalles sobre mi trayectoria profesional, incluyendo roles, responsabilidades y logros destacados.</p>
-    <ul class="space-y-6 w-full max-w-xl">
-        <li class="bg-[#1e1e1e] bg-opacity-80 rounded-xl p-6 shadow-lg border-l-4 border-[#05df72]">
-            <span class="font-semibold text-[#05df72]">Software Engineer</span> en <span class="font-semibold">XYZ Corp</span> <span class="text-sm text-gray-300">(2020 - Presente)</span>
-            <p class="mt-2 text-gray-200">Desarrollo de aplicaciones web modernas, liderazgo de equipos ágiles y optimización de procesos digitales.</p>
-        </li>
-        <li class="bg-[#1e1e1e] bg-opacity-80 rounded-xl p-6 shadow-lg border-l-4 border-[#e62c2c]">
-            <span class="font-semibold text-[#e62c2c]">Web Developer</span> en <span class="font-semibold">ABC Inc.</span> <span class="text-sm text-gray-300">(2018 - 2020)</span>
-            <p class="mt-2 text-gray-200">Implementación de sitios responsivos, integración de APIs y mejora de experiencia de usuario.</p>
-        </li>
-        <li class="bg-[#1e1e1e] bg-opacity-80 rounded-xl p-6 shadow-lg border-l-4 border-[#ffb347]">
-            <span class="font-semibold text-[#ffb347]">Intern</span> en <span class="font-semibold">Tech Solutions</span> <span class="text-sm text-gray-300">(2017)</span>
-            <p class="mt-2 text-gray-200">Apoyo en proyectos de desarrollo y aprendizaje de buenas prácticas en tecnología.</p>
-        </li>
-    </ul>
+---
+import type { JobEntry } from "../i18n/strings";
+
+interface Props {
+  t: {
+    kicker: string;
+    title: string;
+    intro: string;
+  };
+  jobs: JobEntry[];
+}
+
+const { t, jobs } = Astro.props;
+---
+
+<section
+  id="experience"
+  class="scroll-mt-28 relative mt-20 border border-zinc-200/90 bg-white/60 py-16 text-zinc-900 dark:border-white/[0.06] dark:bg-zinc-900/35 dark:text-zinc-100 md:rounded-2xl md:py-20"
+>
+  <div
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(16,185,129,0.08),transparent_55%)] dark:bg-[radial-gradient(ellipse_70%_45%_at_50%_0%,rgba(16,185,129,0.06),transparent_55%)] md:rounded-2xl"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative mx-auto max-w-3xl px-1 sm:px-0">
+    <header
+      class="mb-12 border-b border-zinc-200/90 pb-10 text-left dark:border-white/[0.06] md:mb-14"
+    >
+      <p
+        class="text-xs font-medium uppercase tracking-[0.16em] text-zinc-500 dark:text-zinc-500"
+      >
+        {t.kicker}
+      </p>
+      <h2
+        class="mt-2 text-2xl font-semibold tracking-tight text-zinc-900 dark:text-white md:text-3xl"
+      >
+        {t.title}
+      </h2>
+      <p
+        class="mt-4 max-w-2xl text-pretty text-[15px] leading-relaxed text-zinc-600 dark:text-zinc-400"
+      >
+        {t.intro}
+      </p>
+    </header>
+
+    <div class="relative">
+      <div
+        class="absolute bottom-0 left-6 top-0 w-px bg-gradient-to-b from-zinc-400 via-zinc-300 to-zinc-200 dark:from-zinc-600 dark:via-zinc-700 dark:to-zinc-800 md:left-1/2 md:-translate-x-px"
+        aria-hidden="true"
+      ></div>
+
+      <ol class="relative space-y-8 md:space-y-12">
+        {
+          jobs.map((job: JobEntry, index: number) => {
+            const reversed = index % 2 === 1;
+            const pillClass = job.isBreak
+              ? "inline-block rounded-md border border-dashed border-zinc-400 bg-zinc-100/50 px-2.5 py-1 text-xs font-medium tabular-nums text-zinc-600 dark:border-zinc-700 dark:bg-zinc-950/30 dark:text-zinc-500"
+              : "inline-block rounded-md border border-zinc-200/90 bg-white/80 px-2.5 py-1 text-xs font-medium tabular-nums text-zinc-700 dark:border-white/[0.08] dark:bg-zinc-950/60 dark:text-zinc-300";
+            const cardClass = job.isBreak
+              ? "relative rounded-xl border border-dashed border-zinc-400/90 bg-zinc-100/40 p-5 ml-10 dark:border-zinc-700/80 dark:bg-zinc-950/25"
+              : "relative rounded-xl border border-zinc-200/90 bg-white/70 p-5 ml-10 dark:border-white/[0.06] dark:bg-zinc-950/40";
+            const titleClass = job.isBreak
+              ? "text-[15px] font-semibold text-zinc-800 dark:text-zinc-300"
+              : "text-[15px] font-semibold text-zinc-900 dark:text-zinc-100";
+            const dotBg = job.isBreak ? "bg-zinc-500" : "bg-emerald-600 dark:bg-emerald-500";
+
+            return (
+              <li class="relative md:grid md:grid-cols-2 md:gap-10">
+                <div
+                  class:list={[
+                    "mb-3 md:mb-0",
+                    reversed ? "md:order-2 md:pl-8" : "md:pr-8 md:text-right",
+                  ]}
+                >
+                  <time class={pillClass} datetime={job.datetime}>
+                    {job.dateLabel}
+                  </time>
+                  <p
+                    class:list={[
+                      "mt-2 text-sm text-zinc-600 dark:text-zinc-500",
+                      reversed && "md:text-left",
+                    ]}
+                  >
+                    {job.locationLine}
+                  </p>
+                </div>
+                <div
+                  class:list={[
+                    cardClass,
+                    reversed && "md:order-1 md:pr-8 md:text-right md:ml-0",
+                    !reversed && "md:pl-8 md:ml-0",
+                  ]}
+                >
+                  <span
+                    class:list={[
+                      "absolute top-6 h-2 w-2 rounded-full ring-4 ring-white dark:ring-zinc-950",
+                      dotBg,
+                      "left-0 -translate-x-1/2 md:hidden",
+                      reversed
+                        ? "md:left-auto md:right-0 md:translate-x-[50%]"
+                        : "md:left-1/2 md:translate-x-[-50%]",
+                    ]}
+                  />
+                  <h3
+                    class:list={[
+                      titleClass,
+                      reversed && "md:text-right",
+                    ]}
+                  >
+                    {job.title}
+                  </h3>
+                  <p
+                    class:list={[
+                      "mt-1 text-sm text-zinc-600 dark:text-zinc-500",
+                      reversed && "md:text-right",
+                    ]}
+                  >
+                    {job.subtitle}
+                  </p>
+                  <p
+                    class:list={[
+                      "mt-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400",
+                      reversed && "md:text-right",
+                      job.isBreak && "text-zinc-600 dark:text-zinc-500",
+                    ]}
+                  >
+                    {job.body}
+                  </p>
+                  {job.skills && (
+                    <p
+                      class:list={[
+                        "mt-3 text-xs text-zinc-500 dark:text-zinc-600",
+                        reversed && "md:text-right",
+                      ]}
+                    >
+                      {job.skills}
+                    </p>
+                  )}
+                </div>
+              </li>
+            );
+          })
+        }
+      </ol>
+    </div>
+  </div>
 </section>
