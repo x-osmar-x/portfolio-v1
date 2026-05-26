@@ -1,7 +1,14 @@
 packages:
   - "."
 
+# pnpm v10
 onlyBuiltDependencies:
   - "@tailwindcss/oxide"
   - "esbuild"
   - "sharp"
+
+# pnpm v10.26+ / v11 (used by GitHub Actions with latest pnpm)
+allowBuilds:
+  "@tailwindcss/oxide": true
+  esbuild: true
+  sharp: true
