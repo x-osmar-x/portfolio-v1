@@ -15,7 +15,8 @@ interface Props {
 
 const { lang, t } = Astro.props;
 const basePath = lang === "en" ? "/en" : "";
-const contactHref = `${basePath}/#contact`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const contactHref = `${base}${basePath}/#contact`;
 ---
 
 <section
@@ -116,7 +117,7 @@ const contactHref = `${basePath}/#contact`;
           </clipPath>
         </defs>
         <image
-          href="/foto.jpg"
+          href={`${import.meta.env.BASE_URL}foto.jpg`}
           width="320"
           height="320"
           clip-path="url(#clawClip)"

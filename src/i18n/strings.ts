@@ -231,5 +231,6 @@ export function getStrings(lang: Lang) {
 }
 
 export function otherLangPath(lang: Lang): string {
-  return lang === "es" ? "/en/" : "/";
+  const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+  return lang === "es" ? `${base}/en/` : `${base}/`;
 }

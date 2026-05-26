@@ -9,7 +9,8 @@ const { lang } = Astro.props;
 const t = getStrings(lang);
 const n = t.nav;
 const basePath = lang === "en" ? "/en" : "";
-const hash = (id: string) => `${basePath}/#${id}`;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const hash = (id: string) => `${base}${basePath}/#${id}`;
 ---
 
 <nav
@@ -19,7 +20,7 @@ const hash = (id: string) => `${basePath}/#${id}`;
     class="mx-auto flex h-14 max-w-6xl items-center justify-between gap-3 px-4 sm:h-16 sm:px-6 lg:px-8"
   >
     <a
-      href={`${basePath}/`}
+      href={`${base}${basePath}/`}
       class="shrink-0 text-[15px] font-semibold tracking-tight text-zinc-900 transition-colors hover:text-zinc-700 dark:text-zinc-100 dark:hover:text-white"
     >
       Osmar Barrientos
