@@ -117,7 +117,7 @@ const contactHref = `${base}${basePath}/#contact`;
           </clipPath>
         </defs>
         <image
-          href={`${import.meta.env.BASE_URL}foto.jpg`}
+          href={`${import.meta.env.BASE_URL.replace(/\/$/, "")}/foto.jpg`}
           width="320"
           height="320"
           clip-path="url(#clawClip)"
